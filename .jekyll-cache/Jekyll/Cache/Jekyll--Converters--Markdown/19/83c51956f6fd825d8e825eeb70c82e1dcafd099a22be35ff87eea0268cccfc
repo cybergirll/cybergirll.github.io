@@ -1,0 +1,38 @@
+I"F	<h2 id="background">Background</h2>
+<p>Cross-Site Scripting (XSS) arises when code incorporates user-supplied data into the response without adequately sanitizing it beforehand. Named for the capability it grants attackers to execute JavaScript on someone else’s site, Cross-Site Scripting is commonly referred to as “XSS.”</p>
+
+<p>This vulnerability holds the #3 position on OWASP’s list of Top 10 security threats and stands out as the most prevalent flaw in web application security.</p>
+
+<p>Various methods enable hackers to inject JavaScript into a page, contingent on the output of unsanitized incoming data. Once the hacker successfully embeds their JavaScript within the page response, the script executes, typically unbeknownst to the unsuspecting user. The script can carry out a range of actions, including pilfering site cookies or session data. This exploit works because the browser inherently trusts all JavaScript provided with the page.</p>
+
+<p><img src="/img/posts/XSS-blog.jpg" alt="IMDb page" /></p>
+
+<h2 id="reflected-cross-site-scripting-xss-vulnerability">Reflected Cross-Site Scripting (XSS) Vulnerability</h2>
+
+<p>Reflected Cross-Site Scripting (XSS) occurs when a script executes directly in the victim’s browser. The JavaScript in question is typically embedded in the URL data or form data. The term “reflected” is used because the script rebounds immediately. In a carefully orchestrated attack, the user may not even detect that the script has executed.</p>
+
+<p>Consider a scenario where a website features a search box at the top. When a user enters a search term, the application queries the database for products matching that term. If no products are found, the application responds with:</p>
+
+<p>``java</p>
+<h1>No results were found for: <?php echo $term; ?></h1>
+<p>``
+If the search request was:</p>
+
+<p><code class="language-plaintext highlighter-rouge">java
+GET /search.php?term=candy
+</code>
+The application would return:</p>
+
+<p>``java</p>
+<h1>No results were found for: candy</h1>
+<p>``</p>
+
+<p>Observe that the data submitted in the URL query is not being cleansed to eliminate or deactivate JavaScript before being presented in HTML output.</p>
+
+<p>A malicious request like:</p>
+
+<p><code class="language-plaintext highlighter-rouge">java
+GET /search.php?term=&lt;script&gt;alert('XSS!');&lt;/script&gt;
+</code></p>
+
+:ET

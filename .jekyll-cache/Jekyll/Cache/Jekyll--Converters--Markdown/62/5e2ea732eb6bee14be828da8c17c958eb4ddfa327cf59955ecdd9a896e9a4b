@@ -1,0 +1,31 @@
+I"<h2 id="background">Background</h2>
+<p>Cross-Site Scripting (XSS) arises when code incorporates user-supplied data into the response without adequately sanitizing it beforehand. Named for the capability it grants attackers to execute JavaScript on someone else’s site, Cross-Site Scripting is commonly referred to as “XSS.”</p>
+
+<p>This vulnerability holds the #3 position on OWASP’s list of Top 10 security threats and stands out as the most prevalent flaw in web application security.</p>
+
+<p>Various methods enable hackers to inject JavaScript into a page, contingent on the output of unsanitized incoming data. Once the hacker successfully embeds their JavaScript within the page response, the script executes, typically unbeknownst to the unsuspecting user. The script can carry out a range of actions, including pilfering site cookies or session data. This exploit works because the browser inherently trusts all JavaScript provided with the page.</p>
+
+<p><img src="/img/posts/XSS-blog.jpg" alt="IMDb page" /></p>
+
+<h2 id="reflected-cross-site-scripting-xss-vulnerability">Reflected Cross-Site Scripting (XSS) Vulnerability</h2>
+
+<p>Reflected Cross-Site Scripting (XSS) occurs when a script executes directly in the victim’s browser. The JavaScript in question is typically embedded in the URL data or form data. The term “reflected” is used because the script rebounds immediately. In a carefully orchestrated attack, the user may not even detect that the script has executed.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="nc">No</span> <span class="n">results</span> <span class="n">were</span> <span class="n">found</span> <span class="k">for</span><span class="o">:</span> <span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span><span class="n">alert</span><span class="o">(</span><span class="err">'</span><span class="no">XSS</span><span class="o">!</span><span class="err">'</span><span class="o">);&lt;/</span><span class="n">script</span><span class="o">&gt;&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</code></pre></div></div>
+<h2 id="xss-using-an-html-attribute">XSS using an HTML attribute</h2>
+
+<p>Here’s another illustration involving a login form. Take note that the username text input will be filled with the value of <code class="language-plaintext highlighter-rouge">$username</code>, if available. In the event of a failed login attempt, the entered username will be retained in the form, allowing the user to make another attempt with a new password.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;!--</span> <span class="n">login</span><span class="o">.</span><span class="na">php</span> <span class="o">--&gt;</span>
+<span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">"username"</span> <span class="n">value</span><span class="o">=</span><span class="s">"&lt;?php echo $username; ?&gt;"</span> <span class="o">/&gt;&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"password"</span> <span class="n">name</span><span class="o">=</span><span class="s">"password"</span> <span class="n">value</span><span class="o">=</span><span class="s">""</span> <span class="o">/&gt;</span>
+</code></pre></div></div>
+
+<p>A malicious actor inputs the subsequent username and password, then proceeds to submit the form.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">username:</span> <span class="err">"</span> <span class="o">/&gt;&lt;</span><span class="n">script</span><span class="o">&gt;</span><span class="n">alert</span><span class="o">(</span><span class="err">'</span><span class="no">XSS</span><span class="o">!</span><span class="err">'</span><span class="o">);&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+<span class="nl">password:</span>
+</code></pre></div></div>
+
+:ET

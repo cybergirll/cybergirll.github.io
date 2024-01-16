@@ -1,0 +1,17 @@
+I"�<h2 id="background">Background</h2>
+<p>Cross-Site Scripting (XSS) arises when code incorporates user-supplied data into the response without adequately sanitizing it beforehand. Named for the capability it grants attackers to execute JavaScript on someone else’s site, Cross-Site Scripting is commonly referred to as “XSS.”</p>
+
+<p>This vulnerability holds the #3 position on OWASP’s list of Top 10 security threats and stands out as the most prevalent flaw in web application security.</p>
+
+<p>Various methods enable hackers to inject JavaScript into a page, contingent on the output of unsanitized incoming data. Once the hacker successfully embeds their JavaScript within the page response, the script executes, typically unbeknownst to the unsuspecting user. The script can carry out a range of actions, including pilfering site cookies or session data. This exploit works because the browser inherently trusts all JavaScript provided with the page.</p>
+
+<p><img src="/img/posts/Kyivstar/Hackers-red.jpeg" alt="IMDb page" /></p>
+
+<p>The SBU announcement specifies that “one of the Russian pseudo-hacking groups has taken responsibility for the attack.” This group is a part of the hacking division of the GRU, which publicly legitimizes the results of its criminal activities.</p>
+
+<p>Cyber experts from the Security Service of Ukraine are currently actively collaborating with “Kyivstar” specialists to restore the network after yesterday’s hacker attack.</p>
+
+<p>According to preliminary estimates, on December 13, the restoration of fixed internet for households is planned, along with the launch of mobile communication and the internet. However, the restoration of all services will take time due to critical damage to the digital infrastructure of “Kyivstar” inflicted during the attack.</p>
+
+<p>The SBU continues to document Russia’s cyber attack as a war crime, drawing attention to the aggression against Ukraine’s civilian infrastructure.</p>
+:ET

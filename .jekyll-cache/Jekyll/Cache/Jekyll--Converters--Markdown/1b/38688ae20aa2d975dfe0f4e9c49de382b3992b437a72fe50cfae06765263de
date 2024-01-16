@@ -1,0 +1,3 @@
+I"N<h2 id="background">Background</h2>
+<p>Cross-Site Scripting (XSS) arises when code incorporates user-supplied data into the response without adequately sanitizing it beforehand. Named for the capability it grants attackers to execute JavaScript on someone else’s site, Cross-Site Scripting is commonly referred to as “XSS.”</p>
+:ET
