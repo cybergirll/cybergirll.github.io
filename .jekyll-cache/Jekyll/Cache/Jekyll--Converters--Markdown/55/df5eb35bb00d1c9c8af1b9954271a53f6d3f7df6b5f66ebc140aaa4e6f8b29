@@ -1,0 +1,60 @@
+I"�<h2 id="background">Background</h2>
+
+<p>Cross-Site Request Forgery (CSRF) stands as a pervasive and evolving threat in the realm of web security. As cyber threats continue to evolve, understanding CSRF attacks becomes paramount for developers, security professionals, and web administrators. This topic delves into the intricacies of CSRF attacks, exploring their mechanisms, detection methods, and preventive measures. From real-world examples to cutting-edge defense strategies, the discussion aims to empower the audience with insights to fortify web applications against CSRF vulnerabilities.</p>
+
+<h2 id="exploiting-security-csrf-post-request-attack">Exploiting Security: CSRF POST Request Attack</h2>
+
+<p><img src="/img/posts/Src.jpg" alt="IMDb page" /></p>
+
+<p>Cross-Site Request Forgery (CSRF), often referred to as CSRF or XSRF, is a deceptive attack wherein a user is manipulated into executing actions on a different site unintentionally, either through clicking a link or submitting a form. The name “Cross-Site” is derived from the attack’s origin on one site but its execution on another, while “Request Forgery” highlights the deceptive nature of the attack, as it is not a legitimate user request.</p>
+
+<p>When a request is sent to a website, the browser includes all stored cookies for that site with the request. If these cookies contain information such as</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> "logged_in=true"
+</code></pre></div></div>
+<p>the target server may interpret the request as originating from a currently logged-in user. This exploit capitalizes on the inherent trust the server places in the user’s browser.</p>
+
+<p>Typically utilized for state-changing requests, CSRF attacks prompt actions on behalf of the user, even though the attacker may not have visibility into the outcomes of the request, as it remains a request facilitated by the user’s browser. Understanding and mitigating CSRF vulnerabilities are essential for safeguarding web applications against unauthorized actions initiated by malicious actors.</p>
+
+<h2 id="understanding-the-dynamics-of-csrf-attacks-via-get-requests">Understanding the Dynamics of CSRF Attacks via GET Requests</h2>
+
+<p>A basic CSRF attack involves deceiving a user into initiating a GET request to a particular URL. Achieving this can be as straightforward as embedding the URL within a link that carries a misleading name. This deceptive link might be strategically placed in various locations, such as a blog comment (a method commonly exploited in WordPress vulnerabilities), a post on an online forum, or even within a phishing email.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">"http://hackermag.com/best_hacker/vote/48576"</span> <span class="o">/&gt;</span>
+</code></pre></div></div>
+
+<p>Upon loading a page, the browser autonomously generates separate requests to fetch all images embedded in the HTML. In the context of a user viewing a forum page containing the mentioned image within a user post, the browser initiates a GET request to the corresponding URL. Importantly, no user interaction is required, as the potential harm occurs during the browser’s interpretation of the HTML, without the need for the user to click any links.</p>
+
+<h2 id="csrf-get-request-with-user-authentication">CSRF GET Request with User Authentication</h2>
+
+<p>The primary risk of a CSRF attack emerges when the targeted URL directs to a page on a website requiring user authentication, and the user’s browser maintains their prior authentication state. The exploit capitalizes on the authenticated state stored in the browser.</p>
+
+<p>Consider a scenario where a user logs into their bank website. The bank sets a cookie in the user’s browser, signifying authorized access. Subsequent requests to any page on the bank’s site include this cookie as proof of authorization.</p>
+
+<p>This process is akin to attending a concert, receiving a wristband upon payment or ticket presentation. The wristband serves as proof of authorized status: Wristband equals authorized; no wristband equals not authorized.</p>
+
+<p>Now, envision the user concluding their banking activities, closing the browser window without logging out. The user’s browser still retains the bank authorization cookie – it still wears the wristband.</p>
+
+<p>If an attacker manages to manipulate the user into making a request to the bank’s website, the request carries the cookie with authorization, and the server considers it authenticated. From the bank’s perspective, this appears as just another routine request from the user’s browser.</p>
+
+<pre><code class="language-`java">&lt;img src="https://bank.com/transfer?amount=10000&amp;to_account=2468013579" /&gt;
+</code></pre>
+
+<p>Should a user load a page featuring the provided image tag, it initiates a <code class="language-plaintext highlighter-rouge">GET</code> request to the URL indicated in the <code class="language-plaintext highlighter-rouge">src</code> attribute. In this situation, an unauthenticated user would be directed to bank.com’s login page. However, for a user who was authenticated previously, access might be granted if the request is acknowledged by <code class="language-plaintext highlighter-rouge">bank.com</code>.</p>
+
+<p>CSRF attacks can manifest in various actions, with some prevalent examples being:</p>
+
+<ul>
+  <li>Altering the password</li>
+  <li>Modifying the email address</li>
+  <li>Logging into a site</li>
+  <li>Initiating fund transfers</li>
+  <li>Downloading malware</li>
+</ul>
+
+<h2 id="exploiting-security-csrf-post-request-attack-1">Exploiting Security: CSRF POST Request Attack</h2>
+
+<p><code class="language-plaintext highlighter-rouge">GET</code> requests aren’t the sole method for initiating a CSRF attack. An alternative approach involves an attacker fabricating a form. Breaking down the process step by step can provide clarity on the construction of such an attack.</p>
+
+<p>Consider a scenario where an attacker conducts research to understand the appearance of a genuine bank.</p>
+
+:ET
