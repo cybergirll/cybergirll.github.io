@@ -49,3 +49,14 @@ If an attacker manages to manipulate the user into making a request to the bank'
 ```
 
 
+
+CSRF attacks can manifest in various actions, with some prevalent examples being:
+
+- Altering the password
+- Modifying the email address
+- Logging into a site
+- Initiating fund transfers
+- Downloading malware
+
+
+## Exploiting Security: CSRF POST Request Attack
