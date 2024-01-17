@@ -1,0 +1,35 @@
+I"Í<h2 id="background">Background</h2>
+
+<p>SQLI attacks can have many different goals.</p>
+
+<ul>
+  <li>
+    <p>Explore application or database structure</p>
+  </li>
+  <li>
+    <p>Authentication</p>
+  </li>
+  <li>Circumvent application logins</li>
+  <li>
+    <p>Extract data</p>
+  </li>
+  <li>Usernames</li>
+  <li>Passwords</li>
+  <li>Identity information</li>
+  <li>Credit card details</li>
+  <li>
+    <p>Modify data</p>
+  </li>
+  <li>Alter orders or transactions</li>
+  <li>Escalate permissions</li>
+  <li>
+    <p>Erase data</p>
+  </li>
+  <li>Sabotage</li>
+</ul>
+
+<p><img src="/img/posts/programmer_eye.jpg" alt="IMDb page" /></p>
+
+<h2 id="illustration-of-sql-injection-sqli">Illustration of SQL Injection (SQLI)</h2>
+
+:ET
