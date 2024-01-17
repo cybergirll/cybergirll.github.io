@@ -2,7 +2,7 @@
 layout: post
 title: "Advancing Beyond Passwords with Digital Authentication Systems"
 subtitle: "Addressing Password Challenges, Exploring the Potential of Passwordless Authentication, and the Emerging Technologies Enabling Adoption"
-background: '/img/posts/Digitalauth.jpg'
+background: '/img/posts/Sudo.jpg'
 ---
 
 ## Challenges with Passwords
