@@ -1,0 +1,55 @@
+I"<h2 id="background">Background</h2>
+<p>Remote Code Execution occurs when external code can execute internal operating-system-level commands on a server from a distance.</p>
+
+<p>Once an attacker gains access to the internal OS-level, they can perform tasks equivalent to a logged-in user:</p>
+
+<ul>
+  <li>Read, add, modify, delete files</li>
+  <li>Change access privileges, passwords</li>
+  <li>Turn on and off configurations and services</li>
+  <li>Communicate with other servers</li>
+</ul>
+
+<p>While this is a potent attack, executing it is challenging. There is a division between the operating system and the software it runs, and casual access is not possible. However, there are access pathways as most programming languages have functions allowing direct communication with the underlying OS.</p>
+
+<p>To achieve Remote Code Execution, two conditions must be met:</p>
+
+<ol>
+  <li>A programmer must use a function enabling communication with the OS.</li>
+  <li>An attacker must find a way to input dynamic data into that function call.</li>
+</ol>
+
+<p><img src="/img/posts/CodeHack.jpg" alt="IMDb page" /></p>
+
+<h2 id="common-system-execution-operations">Common System Execution Operations</h2>
+
+<p>Common Functions for OS Communication in Various Programming Languages:</p>
+
+<ul>
+  <li>system, %x, exec, ``</li>
+  <li>shell, sh, shell_exec</li>
+  <li>open, popen, proc_open</li>
+  <li>call, subprocess, spawn</li>
+  <li>passthru, seval</li>
+</ul>
+
+<p>Note: This is not an exhaustive list, but it includes keywords that should raise concerns if observed in code.</p>
+
+<p>Here is an example in PHP where the system() function is being used to ask the OS for a list of files in a directory.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;?</span><span class="n">php</span>
+  <span class="c1">// list_images.php</span>
+  <span class="n">$dir</span> <span class="o">=</span> <span class="n">$_GET</span><span class="o">[</span><span class="err">'</span><span class="n">dir</span><span class="err">'</span><span class="o">];</span>
+  <span class="c1">// list files in a subdirectory of images</span>
+  <span class="n">$cmd</span> <span class="o">=</span> <span class="err">'</span><span class="n">ls</span> <span class="n">images</span><span class="o">/</span><span class="err">'</span> <span class="o">.</span> <span class="n">$dir</span><span class="o">;</span>
+  <span class="n">system</span><span class="o">(</span><span class="n">$cmd</span><span class="o">,</span> <span class="n">$return_value</span><span class="o">);</span>
+  <span class="n">echo</span> <span class="n">$return_value</span><span class="o">;</span>
+
+  <span class="c1">// GET: /list_images.php?dir=Vacation</span>
+  <span class="c1">// GET: /list_images.php?dir=Vacation%3Bcat+%2Fetc%2Fpasswd</span>
+<span class="o">?&gt;</span>
+</code></pre></div></div>
+<p>(%3B is a semicolon; %2F is a slash)
+It might seem that the dynamic value of dir will be limited to listing files in the images/ directory. But the injection is able to end that command and issue a second command which lists out the contents of the system’s primary user password file.</p>
+
+:ET
