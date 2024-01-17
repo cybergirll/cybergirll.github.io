@@ -1,0 +1,26 @@
+I"Y<h2 id="background">Background</h2>
+<p>Web applications frequently enable users to upload files for various purposes such as profile photos, avatars, photo sharing, animated GIFs in forums, layout customization, and file distribution (PDF, Word, Excel). However, potential abuses arise when users upload too many files, files that are excessively large, or files at a high frequency. Such actions can strain a system’s file storage resources, causing depletion. Additionally, users may inadvertently or intentionally upload files with the wrong content type, creating mismatches with the application’s expectations (e.g., uploading a movie instead of an image). These abuses, whether accidental or intentional, pose risks such as server slowdowns, connection monopolization, and potential denial of service.</p>
+
+<p><img src="/img/posts/Carnabotnet.jpg" alt="IMDb page" /></p>
+
+<h2 id="malware">Malware</h2>
+<p>The most severe form of file upload abuse involves the uploading of malware, a term derived from “malicious software.” When a file containing malware is accessed, the malware is triggered. To avoid detection, malware may disguise itself as a different file type and even be embedded within seemingly harmless formats such as images, PDFs, or other media assets.</p>
+
+<p>Malware encompasses various types, each serving different purposes and pursuing distinct goals:</p>
+
+<ol>
+  <li>Adware</li>
+  <li>Bots and botnets</li>
+  <li>Spam</li>
+  <li>Denial of Service (DoS)</li>
+  <li>Ransomware</li>
+  <li>Spyware</li>
+  <li>Keystroke loggers</li>
+  <li>Data harvesting</li>
+  <li>Webcam activation</li>
+  <li>Bypassing access controls</li>
+  <li>Rootkit (total server control)</li>
+</ol>
+
+<p>These diverse forms of malware pose significant threats, ranging from unwanted advertisements and system manipulation to data breaches and complete control over servers.</p>
+:ET
