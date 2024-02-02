@@ -1,0 +1,118 @@
+I"�!<h2 id="background">Background</h2>
+
+<p>In the realm of cybersecurity, virtualization plays a crucial role by enabling the creation of isolated virtual environments within a single physical computer. This technology allows for the development of distinct virtual machines, each equipped with its own virtual Central Processing Unit (CPU), Graphics Processing Unit (GPU), Random Access Memory (RAM), Network Interface Card (NIC), storage (HDD, SSD), and input peripherals such as a mouse and keyboard.</p>
+
+<p>The significance of virtualization in cybersecurity lies in its ability to conduct various tasks within these isolated virtual machines, all without compromising the security of the underlying physical machine’s operating system. To achieve this, a hypervisor, a specialized software component, must be installed within the host machine’s operating system. The hypervisor facilitates hardware virtualization services, ensuring the secure and efficient operation of the virtual environments.</p>
+
+<h2 id="setting-up-your-virtual-environment">Setting up your Virtual Environment</h2>
+
+<p><img src="/img/posts/VirtualEnvironment.jpg" alt="IMDb page" /></p>
+
+<p>We have outlined instructions for two widely used virtual environments: <em>VirtualBox</em> and <em>Docker</em>. To initiate the process, opt for either Method #1, which involves configuring VirtualBox and Kali, or Method #2, centered around Docker and Kali.</p>
+
+<h2 id="method-1-virtualbox">Method 1: VirtualBox</h2>
+<h4 id="1-download-virtualbox">1. Download VirtualBox</h4>
+
+<ul>
+  <li>Go to <strong><a href="https://www.virtualbox.org/">VirtualBox.org</a></strong></li>
+  <li>Click the big blue button that says “Download VirtualBox”.</li>
+  <li>Click on the platform package for your operating system.</li>
+  <li>Save the file.</li>
+</ul>
+
+<h4 id="2-install-virtualbox">2. Install VirtualBox</h4>
+
+<ul>
+  <li>Run the installer once the download is finished.</li>
+  <li>Select Next to start the installation.</li>
+  <li>Select Next to install the default feature set (everything).</li>
+  <li>Select Next to choose the default options.</li>
+  <li>Select Yes to install the virtual network interfaces. This will allow VirtualBox to create virtual networks and tap into your physical NIC in order for the guest machines to connect to the Internet.</li>
+  <li>Select Install.</li>
+  <li>Answer <code class="language-plaintext highlighter-rouge">Yes</code> to the Windows UAC prompt (check for flashing icon in your taskbar)</li>
+  <li>Select Finish.</li>
+</ul>
+
+<h4 id="3-virtualbox-extension-pack">3. VirtualBox Extension Pack</h4>
+
+<p>The extension pack will add additional functionality in order to provide a more optimal experience. It will also serve to satisfy a requirement for a later assignment.</p>
+
+<p><em>Download the VirtualBox Extension Pack</em></p>
+
+<ul>
+  <li>Return to <strong><a href="https://www.virtualbox.org/wiki/Downloads">VirtualBoxDownloads</a></strong></li>
+  <li>Click the link that says <em>“All supported platforms”</em> under the Extension Pack section.</li>
+  <li>Save the file.</li>
+</ul>
+
+<p><em>Install the VirtualBox Extension Pack</em></p>
+
+<ul>
+  <li>Open the Extension Pack file you just downloaded.</li>
+  <li>Note: It should open in VirtualBox by default, prompting you to Install. If it doesn’t then you may need to manually install it by opening VirtualBox, go through the File menu -&gt; Preferences -&gt; Extensions -&gt; Add new package.</li>
+  <li>Agree to the terms by bring the scroll bar down and clicking “I Agree”.</li>
+  <li>Answer <code class="language-plaintext highlighter-rouge">Yes</code> to the Windows UAC prompt (check for a flashing icon in your taskbar).</li>
+  <li>Click <code class="language-plaintext highlighter-rouge">OK</code> after it successfully installs.</li>
+</ul>
+
+<h4 id="4-kali-linux-installation">4. Kali Linux Installation</h4>
+
+<p>Kali is a Linux distribution (distro) widely utilized by security professionals. It is equipped with over 600 pen testing and forensics tools, and we’ll leverage several of these tools. Additionally, Kali will serve as a platform to introduce the Linux command line interface (CLI) to participants who may be unfamiliar with it.</p>
+
+<h2 id="initial-setup">Initial Setup</h2>
+
+<h4 id="1-download-the-latest-kali-iso-image">1. Download the latest Kali ISO Image</h4>
+
+<ul>
+  <li>Go to <strong><a href="https://www.kali.org/downloads/.">Kali Downloads</a></strong></li>
+  <li>Download the image in the first row column. It’s 3GB+ and may take a while depending on network speed.</li>
+</ul>
+
+<h4 id="2-create-a-new-virtual-machine-vm">2. Create a new Virtual Machine (VM)</h4>
+
+<ul>
+  <li>Open VirtualBox and create a New VM.</li>
+  <li>Name it as you wish, set the Type to Linux and Version to Debian, as Kali is a derivative.</li>
+  <li>Choose a memory size (powers of 2). We recommend allocating a quarter of your total system memory e.g. if you computer has 8G then set it to 2048 MB. If memory is scarce then stick with 1024 MB. You may be able to get by with less but performance will be heavily impacted due to swapping/paging to disk.</li>
+  <li>Create a virtual hard disk, of type VDI, dynamically allocated with AT LEAST 25GB of space. If you have plenty of free space we recommend 50GB.</li>
+</ul>
+
+<h4 id="3-mounting-the-iso-and-bootstrapping">3. Mounting the ISO and Bootstrapping</h4>
+
+<ul>
+  <li>After creating the virtual hard drive you will be back at the main VirtualBox Manager window. From here, make sure the new Kali VM is highlighted blue and click the green arrow Start button.</li>
+  <li>Next you’ll be prompted for a start-up disk. Click the little folder icon with the green arrow.</li>
+  <li>Add a new virtual optical disk image (ISO) file.</li>
+  <li>Open the ISO you downloaded previously in your Downloads folder. Then click <code class="language-plaintext highlighter-rouge">Choose.</code></li>
+  <li>Finally, click Start.</li>
+</ul>
+
+<h2 id="kali-installation">Kali Installation</h2>
+
+<h4 id="1-configuring-the-locale-and-hostname">1. Configuring the Locale and Hostname</h4>
+
+<ul>
+  <li>Once the installer boots up, choose Graphical Install and press <code class="language-plaintext highlighter-rouge">Return/Enter.</code></li>
+  <li>Next choose your language, location and keyboard layout.</li>
+  <li>After a few minutes of loading you will be asked for a hostname. For the purposes of this course you can set this to what you want as long as it is a single lowercase word or you can just leave the default as kali.</li>
+  <li>Leave Domain name blank. If you were making the VM a publicly accessible server and linking it to a DNS record, you would use its fully qualified domain name e.g. kali.example.com.</li>
+</ul>
+
+<h4 id="2-creating-a-user-and-setting-a-password">2. Creating a User and Setting a Password</h4>
+
+<ul>
+  <li>When setting up your user account, the Full name is your “display” name while the Username for your account is the actual login username. Set your username and password to something you’ll remember.</li>
+  <li><strong>WARNING: Usernames in Linux are case-senstive.</strong> When logging in, you must type them exactly as you created them. It may be easier for you (and others) to remember if you follow the standard convention of keeping usernames all lowercase.</li>
+</ul>
+
+<h4 id="3-timezone-partitioning-filesystem-layout">3. Timezone, Partitioning, Filesystem layout</h4>
+
+<ul>
+  <li>Set your <strong>timezone.</strong></li>
+  <li>Go with the default partition layout of <strong>Guided - use entire disk.</strong></li>
+  <li>Click continue to partition your only virtual disk: <strong>sda.</strong> Note how Linux names its drives. The first SCSI (or SATA) disk attached is named sda. If you attached a second one, it would be named sdb, third would be sdc and so forth.</li>
+  <li>Choose <strong>All files in one partition</strong> in order to keep the partitioning layout simple. This will make it easier to enlarge the disk and filesystem later on should the need arise.</li>
+  <li>Select <strong>Finish pertaining and write changes to disk</strong> and continue.</li>
+  <li>Lastly, confirm <strong>Yes</strong> and continue in order to make the changes take effect. Your final layout has 2 partitions, 1 partition for files and 1 for swap. Swap is used as a sort of RAM backup when the system runs out of memory and needs to write to the hard drive. When a system runs out of RAM it’ll bring the system to a crawl. Small amounts of swap space is also used regularly for instance, whenever a low priority process has been asleep for some time and no longer requires high-performance RAM.</li>
+</ul>
+:ET

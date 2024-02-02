@@ -1,0 +1,59 @@
+I"�<h2 id="background">Background</h2>
+
+<p>In the realm of cybersecurity, virtualization plays a crucial role by enabling the creation of isolated virtual environments within a single physical computer. This technology allows for the development of distinct virtual machines, each equipped with its own virtual Central Processing Unit (CPU), Graphics Processing Unit (GPU), Random Access Memory (RAM), Network Interface Card (NIC), storage (HDD, SSD), and input peripherals such as a mouse and keyboard.</p>
+
+<p>The significance of virtualization in cybersecurity lies in its ability to conduct various tasks within these isolated virtual machines, all without compromising the security of the underlying physical machine’s operating system. To achieve this, a hypervisor, a specialized software component, must be installed within the host machine’s operating system. The hypervisor facilitates hardware virtualization services, ensuring the secure and efficient operation of the virtual environments.</p>
+
+<h2 id="setting-up-your-virtual-environment">Setting up your Virtual Environment</h2>
+
+<p><img src="/img/posts/VirtualEnvironment.jpg" alt="IMDb page" /></p>
+
+<p>We have outlined instructions for two widely used virtual environments: <em>VirtualBox</em> and <em>Docker</em>. To initiate the process, opt for either Method #1, which involves configuring VirtualBox and Kali, or Method #2, centered around Docker and Kali.</p>
+
+<h2 id="method-1-virtualbox">Method 1: VirtualBox</h2>
+<h4 id="1-download-virtualbox">1. Download VirtualBox</h4>
+
+<ul>
+  <li>Go to <strong><a href="https://www.virtualbox.org/">VirtualBox.org</a></strong></li>
+  <li>Click the big blue button that says “Download VirtualBox”.</li>
+  <li>Click on the platform package for your operating system.</li>
+  <li>Save the file.</li>
+</ul>
+
+<h4 id="2-install-virtualbox">2. Install VirtualBox</h4>
+
+<ul>
+  <li>Run the installer once the download is finished.</li>
+  <li>Select Next to start the installation.</li>
+  <li>Select Next to install the default feature set (everything).</li>
+  <li>Select Next to choose the default options.</li>
+  <li>Select Yes to install the virtual network interfaces. This will allow VirtualBox to create virtual networks and tap into your physical NIC in order for the guest machines to connect to the Internet.</li>
+  <li>Select Install.</li>
+  <li>Answer <code class="language-plaintext highlighter-rouge">Yes</code> to the Windows UAC prompt (check for flashing icon in your taskbar)</li>
+  <li>Select Finish.</li>
+</ul>
+
+<h4 id="3-virtualbox-extension-pack">3. VirtualBox Extension Pack</h4>
+
+<p>The extension pack will add additional functionality in order to provide a more optimal experience. It will also serve to satisfy a requirement for a later assignment.</p>
+
+<p><em>Download the VirtualBox Extension Pack</em></p>
+
+<ul>
+  <li>Return to <strong><a href="https://www.virtualbox.org/wiki/Downloads">VirtualBoxDownloads</a></strong></li>
+  <li>Click the link that says <em>“All supported platforms”</em> under the Extension Pack section.</li>
+  <li>Save the file.</li>
+</ul>
+
+<p><em>Install the VirtualBox Extension Pack</em></p>
+
+<ul>
+  <li>Open the Extension Pack file you just downloaded.</li>
+  <li>Note: It should open in VirtualBox by default, prompting you to Install. If it doesn’t then you may need to manually install it by opening VirtualBox, go through the File menu -&gt; Preferences -&gt; Extensions -&gt; Add new package.</li>
+  <li>Agree to the terms by bring the scroll bar down and clicking “I Agree”.</li>
+  <li>Answer `Yes to the Windows UAC prompt (check for a flashing icon in your taskbar).</li>
+  <li>Click `OK after it successfully installs.</li>
+</ul>
+
+<h4 id="4kali-linux-installation">4.Kali Linux Installation</h4>
+:ET
